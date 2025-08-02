@@ -30,16 +30,17 @@ namespace MVC_IK_Uygulamasi.Data.Seed
                     // Eğer yoksa, yeni bir kullanıcı oluşturuyoruz
                     var yeniAdminUser = new IdentityUser()
                     {
-                        UserName = "adminuser",
+                        // YENİ HALİ: UserName ve Email aynı olsun
+                        UserName = adminEmail, // Değişiklik burada
                         Email = adminEmail,
                         EmailConfirmed = true
                     };
-                    var result = await userManager.CreateAsync(yeniAdminUser, "IkMODULU01*"); // Şifreyi de basitleştirelim: "admin"
+                    var result = await userManager.CreateAsync(yeniAdminUser, "IkMODULU01*");
                     if (!result.Succeeded)
                     {
                         throw new Exception("Admin kullanıcısı oluşturulurken hata oluştu: " + string.Join(", ", result.Errors.Select(e => e.Description)));
                     }
-                    
+
                     result = await userManager.AddToRoleAsync(yeniAdminUser, "Admin");
                     if (!result.Succeeded)
                     {

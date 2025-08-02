@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_IK_Uygulamasi.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20250802174736_IlkKurulum")]
+    [Migration("20250802181033_IlkKurulum")]
     partial class IlkKurulum
     {
         /// <inheritdoc />
