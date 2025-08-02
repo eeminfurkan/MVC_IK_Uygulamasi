@@ -1,0 +1,29 @@
+﻿@model MVC_IK_Uygulamasi.Models.Personel
+
+@{
+    ViewData["Title"] = "Personel Sil";
+}
+
+<h1>Personel Sil</h1>
+
+<h3 class="text-danger">Bu personeli kalıcı olarak silmek istediğinizden emin misiniz?</h3>
+<div>
+    <h4>Personel Bilgileri</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ad)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Ad)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Soyad)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Soyad)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Departman)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Departman)</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Evet, Sil" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </form>
+</div>

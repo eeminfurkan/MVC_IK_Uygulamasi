@@ -18,7 +18,8 @@ builder.Services.AddScoped<PersonelServisi>();
 // --- EKLENTÝLERÝN SONU ---
 
 // Identity sistemini, bizim düzenlediðimiz UygulamaDbContext'i kullanacak þekilde ayarlýyoruz.
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+// YENÝ HALÝ:
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<UygulamaDbContext>();
 builder.Services.AddControllersWithViews();
 

@@ -20,5 +20,24 @@ namespace MVC_IK_Uygulamasi.Services
             _dbContext.Personeller.Add(yeniPersonel);
             await _dbContext.SaveChangesAsync();
         }
+
+        // Bu iki metodu sınıfın içine, diğer metotların yanına ekle
+
+        public async Task<Personel> PersonelBulAsync(int id)
+        {
+            // FindAsync, verilen Id'ye sahip personeli bulur. Bulamazsa null döner.
+            return await _dbContext.Personeller.FindAsync(id);
+        }
+
+        public async Task PersonelSilAsync(int id)
+        {
+            var silinecekPersonel = await _dbContext.Personeller.FindAsync(id);
+            if (silinecekPersonel != null)
+            {
+                _dbContext.Personeller.Remove(silinecekPersonel);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
     }
 }
