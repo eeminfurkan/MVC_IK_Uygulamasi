@@ -18,7 +18,11 @@
             <th>Başlangıç Tarihi</th>
             <th>Bitiş Tarihi</th>
             <th>Onay Durumu</th>
+            @if (User.IsInRole("Admin"))
+            {
             <th style="width: 250px;">Durumu Değiştir</th>
+            }
+
         </tr>
     </thead>
     <tbody>
@@ -40,6 +44,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.OnayDurumu)
                 </td>
+    @if (User.IsInRole("Admin"))
+    {
                 <td>
                     <form asp-action="DurumGuncelle" method="post">
                         <div class="input-group">
@@ -53,6 +59,8 @@
                         </div>
                     </form>
                 </td>
+    }
+
             </tr>
         }
     </tbody>

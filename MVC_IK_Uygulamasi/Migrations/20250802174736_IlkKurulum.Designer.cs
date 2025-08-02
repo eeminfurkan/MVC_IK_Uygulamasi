@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_IK_Uygulamasi.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20250802091249_IlkKurulum")]
+    [Migration("20250802174736_IlkKurulum")]
     partial class IlkKurulum
     {
         /// <inheritdoc />
@@ -19,6 +19,39 @@ namespace MVC_IK_Uygulamasi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
+
+            modelBuilder.Entity("MVC_IK_Uygulamasi.Models.Izin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("BaslangicTarihi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("BitisTarihi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IzinTuru")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OnayDurumu")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PersonelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("TalepTarihi")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonelId");
+
+                    b.ToTable("Izinler");
+                });
 
             modelBuilder.Entity("MVC_IK_Uygulamasi.Models.Personel", b =>
                 {
@@ -41,12 +74,24 @@ namespace MVC_IK_Uygulamasi.Migrations
                     b.Property<DateTime>("IseGirisTarihi")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Maas")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Pozisyon")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SicilNo")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Soyad")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TCKimlikNo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TelefonNumarasi")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -248,6 +293,17 @@ namespace MVC_IK_Uygulamasi.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MVC_IK_Uygulamasi.Models.Izin", b =>
+                {
+                    b.HasOne("MVC_IK_Uygulamasi.Models.Personel", "Personel")
+                        .WithMany()
+                        .HasForeignKey("PersonelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

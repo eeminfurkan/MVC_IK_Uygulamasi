@@ -1,5 +1,4 @@
 ﻿@model MVC_IK_Uygulamasi.Models.Izin
-
 @{
     ViewData["Title"] = "Yeni İzin Talebi";
 }
@@ -9,33 +8,22 @@
 <div class="row">
     <div class="col-md-6">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="form-group mb-3">
                 <label asp-for="PersonelId" class="control-label">Personel</label>
-                <select asp-for="PersonelId" class="form-control" asp-items="ViewBag.Personeller">
-                    <option value="">-- Lütfen Bir Personel Seçin --</option>
-                </select>
+                <select asp-for="PersonelId" class="form-control" asp-items="ViewBag.Personeller"><option value="">-- Personel Seçin --</option></select>
             </div>
-
             <div class="form-group mb-3">
                 <label asp-for="IzinTuru" class="control-label"></label>
                 <input asp-for="IzinTuru" class="form-control" />
-                <span asp-validation-for="IzinTuru" class="text-danger"></span>
             </div>
-
             <div class="form-group mb-3">
                 <label asp-for="BaslangicTarihi" class="control-label"></label>
                 <input asp-for="BaslangicTarihi" class="form-control" />
-                <span asp-validation-for="BaslangicTarihi" class="text-danger"></span>
             </div>
-
             <div class="form-group mb-3">
                 <label asp-for="BitisTarihi" class="control-label"></label>
                 <input asp-for="BitisTarihi" class="form-control" />
-                <span asp-validation-for="BitisTarihi" class="text-danger"></span>
             </div>
-
             <div class="form-group mt-4">
                 <input type="submit" value="Talep Oluştur" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-secondary">Listeye Geri Dön</a>

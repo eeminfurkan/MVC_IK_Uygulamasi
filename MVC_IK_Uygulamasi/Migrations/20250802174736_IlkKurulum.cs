@@ -56,12 +56,16 @@ namespace MVC_IK_Uygulamasi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    SicilNo = table.Column<string>(type: "TEXT", nullable: true),
+                    TCKimlikNo = table.Column<string>(type: "TEXT", nullable: true),
                     Ad = table.Column<string>(type: "TEXT", nullable: false),
                     Soyad = table.Column<string>(type: "TEXT", nullable: false),
                     Departman = table.Column<string>(type: "TEXT", nullable: false),
                     Pozisyon = table.Column<string>(type: "TEXT", nullable: false),
+                    Maas = table.Column<decimal>(type: "TEXT", nullable: false),
                     IseGirisTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Eposta = table.Column<string>(type: "TEXT", nullable: false)
+                    Eposta = table.Column<string>(type: "TEXT", nullable: false),
+                    TelefonNumarasi = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,6 +178,30 @@ namespace MVC_IK_Uygulamasi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Izinler",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PersonelId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IzinTuru = table.Column<string>(type: "TEXT", nullable: false),
+                    BaslangicTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    BitisTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    TalepTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    OnayDurumu = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Izinler", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Izinler_Personeller_PersonelId",
+                        column: x => x.PersonelId,
+                        principalTable: "Personeller",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -210,6 +238,11 @@ namespace MVC_IK_Uygulamasi.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Izinler_PersonelId",
+                table: "Izinler",
+                column: "PersonelId");
         }
 
         /// <inheritdoc />
@@ -231,13 +264,16 @@ namespace MVC_IK_Uygulamasi.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Personeller");
+                name: "Izinler");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Personeller");
         }
     }
 }

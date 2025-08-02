@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVC_IK_Uygulamasi.Controllers
 {
-    // [Authorize] // BU ÇOK ÖNEMLİ: Artık bu controller'daki tüm sayfalara sadece giriş yapmış kullanıcılar erişebilir.
+    [Authorize(Roles = "Admin")] // SADECE "Admin" ROLÜNDEKİLER GİREBİLİR
     public class PersonelController : Controller
     {
         private readonly PersonelServisi _personelServisi;

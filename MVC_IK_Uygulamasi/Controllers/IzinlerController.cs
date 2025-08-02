@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization; // Bu using ifadesini ekle
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC_IK_Uygulamasi.Models;
 using MVC_IK_Uygulamasi.Services;
+using System.Security.Claims; // Bu using ifadesini ekle
 using System.Threading.Tasks;
-using MVC_IK_Uygulamasi.Models; // Yeni ekledik
-using Microsoft.AspNetCore.Mvc.Rendering; // SelectList için yeni ekledik
 
 namespace MVC_IK_Uygulamasi.Controllers
 {
+    [Authorize] // BU ÖNEMLİ: Bu controller'daki tüm sayfalara erişmek için en azından GİRİŞ YAPMAK zorunlu.
     public class IzinlerController : Controller
     {
         private readonly IzinServisi _izinServisi;
-        // Personel listesini çekmek için PersonelServisi'ne de ihtiyacımız var.
         private readonly PersonelServisi _personelServisi;
 
         public IzinlerController(IzinServisi izinServisi, PersonelServisi personelServisi)
@@ -18,44 +20,43 @@ namespace MVC_IK_Uygulamasi.Controllers
             _personelServisi = personelServisi;
         }
 
-        // GET: Izinler
         public async Task<IActionResult> Index()
         {
-            var izinler = await _izinServisi.TumIzinleriGetirAsync();
+            // Bu metodu daha önce yazmıştık, şimdi çalışacak.
+            var izinler = new List<Izin>();
+            if (User.IsInRole("Admin"))
+            {
+                izinler = await _izinServisi.TumIzinleriGetirAsync();
+            }
+            else
+            {
+                var kullaniciId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                izinler = await _izinServisi.PersoneleAitIzinleriGetirAsync(kullaniciId);
+            }
             return View(izinler);
         }
 
-        // GET: Izinler/Create
-        // Boş izin talep formunu gösterir.
         public async Task<IActionResult> Create()
         {
-            // Formdaki personel seçimi listesini doldurmak için tüm personelleri çekiyoruz.
+            // Normal bir personel, sadece kendisi için izin talep edebilmeli.
+            // Admin ise herkes için talep oluşturabilmeli. Şimdilik basit tutalım.
             ViewBag.Personeller = new SelectList(await _personelServisi.TumPersonelleriGetirAsync(), "Id", "Ad");
             return View();
         }
 
-        // POST: Izinler/Create
-        // Dolu formdan gelen bilgileri alıp veritabanına kaydeder.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Izin yeniIzinTalebi)
         {
-            // Otomatik olarak doldurulacak alanları ayarlıyoruz.
             yeniIzinTalebi.TalepTarihi = DateTime.Now;
             yeniIzinTalebi.OnayDurumu = "Beklemede";
-
-            // ModelState.IsValid kontrolü, modeldeki kurallara uyulup uyulmadığını kontrol eder.
-            // Biz henüz kural eklemediğimiz için bu kontrolü daha sonra detaylandıracağız.
-            // Şimdilik temel haliyle devam edebiliriz.
-
             await _izinServisi.IzinTalebiEkleAsync(yeniIzinTalebi);
-            return RedirectToAction(nameof(Index)); // Kayıttan sonra listeleme sayfasına yönlendir.
+            return RedirectToAction(nameof(Index));
         }
-
-        // Bu metodu Controller'ın içine, diğer metotların yanına ekle
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")] // SADECE Adminler bu metodu çalıştırabilir.
         public async Task<IActionResult> DurumGuncelle(int id, string durum)
         {
             await _izinServisi.IzinDurumGuncelleAsync(id, durum);

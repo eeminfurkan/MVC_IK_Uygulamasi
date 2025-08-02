@@ -7,14 +7,13 @@ namespace MVC_IK_Uygulamasi.Models
     {
         public int Id { get; set; }
 
-        // Hangi personele ait olduğunu belirtmek için Foreign Key
+        [Display(Name = "Personel")]
         [ForeignKey("Personel")]
         public int PersonelId { get; set; }
         public Personel Personel { get; set; }
 
-
         [Display(Name = "İzin Türü")]
-        public string IzinTuru { get; set; } // Örn: Yıllık, Raporlu, Ücretsiz
+        public string IzinTuru { get; set; }
 
         [Display(Name = "Başlangıç Tarihi")]
         [DataType(DataType.Date)]
@@ -29,6 +28,6 @@ namespace MVC_IK_Uygulamasi.Models
         public DateTime TalepTarihi { get; set; }
 
         [Display(Name = "Onay Durumu")]
-        public string OnayDurumu { get; set; } // Örn: Beklemede, Onaylandı, Reddedildi
+        public string OnayDurumu { get; set; }
     }
 }

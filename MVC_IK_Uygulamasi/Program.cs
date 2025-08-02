@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_IK_Uygulamasi.Data;
 using MVC_IK_Uygulamasi.Services;
+using MVC_IK_Uygulamasi.Data.Seed;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +24,11 @@ builder.Services.AddScoped<IzinServisi>(); // BU SATIRI EKLE
 
 // Identity sistemini, bizim düzenlediðimiz UygulamaDbContext'i kullanacak þekilde ayarlýyoruz.
 // YENÝ HALÝ:
+// YENÝSÝ:
+// YENÝ VE DOÐRU HALÝ:
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<UygulamaDbContext>();
-builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -54,5 +58,22 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+
+// ... app.MapRazorPages(); ...
+
+// YENÝ EKLEDÝÐÝMÝZ BÖLÜM
+// Uygulama çalýþmaya baþlamadan önce rolleri ve admin'i tohumluyoruz.
+await AppSeeder.Seeder(app);
+
+
+// Uygulama her baþladýðýnda bekleyen Migration'larý otomatik olarak uygula.
+// Bu, "Update-Database" komutunu koddan çalýþtýrmak gibidir.
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<UygulamaDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
+// --- KODUN SONU ---
 
 app.Run();

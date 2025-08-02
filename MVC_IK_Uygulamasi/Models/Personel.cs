@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations; // Bu satırı ekliyoruz
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVC_IK_Uygulamasi.Models
 {
     public class Personel
     {
         public int Id { get; set; }
-        
-        [Display(Name = "Sicil No")] // BU SATIRI EKLE
-        public string? SicilNo { get; set; } // BU SATIRI EKLE
+
+        [Display(Name = "Sicil No")]
+        public string? SicilNo { get; set; }
 
         [Display(Name = "T.C. Kimlik No")]
         public string? TCKimlikNo { get; set; }
@@ -21,16 +22,19 @@ namespace MVC_IK_Uygulamasi.Models
         public decimal Maas { get; set; }
 
         [Display(Name = "İşe Giriş Tarihi")]
-        [DataType(DataType.Date)] // Bu, formlarda sadece tarih seçilmesini sağlar
+        [DataType(DataType.Date)]
         public DateTime IseGirisTarihi { get; set; }
 
         [Display(Name = "E-posta Adresi")]
-        [EmailAddress] // Bu, e-posta formatı doğrulaması yapar
+        [EmailAddress]
         public string Eposta { get; set; }
 
         [Display(Name = "Telefon Numarası")]
         public string? TelefonNumarasi { get; set; }
 
-
+        // Bu alan, bir personelin o gün izinli olup olmadığını
+        // arayüzde belirtmek için kullanılacak bir bayraktır.
+        [NotMapped]
+        public bool BugunIzinliMi { get; set; } = false;
     }
 }
