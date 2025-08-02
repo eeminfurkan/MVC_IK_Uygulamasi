@@ -1,0 +1,29 @@
+﻿@model List<MVC_IK_Uygulamasi.Models.Personel>
+
+@{
+    ViewData["Title"] = "Personel Listesi";
+}
+
+<h1>Personel Listesi</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Departman</th>
+            <th>Pozisyon</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var personel in Model)
+        {
+            <tr>
+                <td>@personel.Ad</td>
+                <td>@personel.Soyad</td>
+                <td>@personel.Departman</td>
+                <td>@personel.Pozisyon</td>
+            </tr>
+        }
+    </tbody>
+</table>
