@@ -111,5 +111,28 @@ namespace MVC_IK_Uygulamasi.Controllers
             }
             return View(personel); // Hata varsa formu geri göster.
         }
+
+        // Bu metodu Controller'ın içine, diğer metotların yanına ekle
+
+        // GET: /Personel/Details/5
+        // Id'si 5 olan personelin detaylarını gösterir.
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            // PersonelServisi'nden personeli bulmasını istiyoruz.
+            // İleride izinleri de göstermek için .Include() ekleyebiliriz ama şimdilik bu yeterli.
+            var personel = await _personelServisi.PersonelBulAsync(id.Value);
+
+            if (personel == null)
+            {
+                return NotFound();
+            }
+
+            return View(personel); // Personel bilgilerini detay sayfasına gönder.
+        }
     }
 }

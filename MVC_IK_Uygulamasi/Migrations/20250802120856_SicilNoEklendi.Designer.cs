@@ -3,6 +3,7 @@ using System;
 using MVC_IK_Uygulamasi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_IK_Uygulamasi.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    partial class UygulamaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250802120856_SicilNoEklendi")]
+    partial class SicilNoEklendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");

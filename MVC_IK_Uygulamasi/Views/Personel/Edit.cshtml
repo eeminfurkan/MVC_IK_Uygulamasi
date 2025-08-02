@@ -11,7 +11,17 @@
         <form asp-action="Edit">
             <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <div class="form-group mb-3">
+                <label asp-for="SicilNo" class="control-label"></label>
+                <input asp-for="SicilNo" class="form-control" />
+                <span asp-validation-for="SicilNo" class="text-danger"></span>
+            </div>
+            @* Ad'dan önce TCKimlikNo *@
+            <div class="form-group mb-3">
+                <label asp-for="TCKimlikNo" class="control-label"></label>
+                <input asp-for="TCKimlikNo" class="form-control" />
+                <span asp-validation-for="TCKimlikNo" class="text-danger"></span>
+            </div>
             <div class="form-group mb-3">
                 <label asp-for="Ad" class="control-label"></label>
                 <input asp-for="Ad" class="form-control" />
@@ -31,6 +41,17 @@
                 <label asp-for="Pozisyon" class="control-label"></label>
                 <input asp-for="Pozisyon" class="form-control" />
                 <span asp-validation-for="Pozisyon" class="text-danger"></span>
+            </div>
+            @* Pozisyon'dan sonra Maas ve TelefonNumarasi *@
+            <div class="form-group mb-3">
+                <label asp-for="Maas" class="control-label"></label>
+                <input asp-for="Maas" class="form-control" />
+                <span asp-validation-for="Maas" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="TelefonNumarasi" class="control-label"></label>
+                <input asp-for="TelefonNumarasi" class="form-control" />
+                <span asp-validation-for="TelefonNumarasi" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Eposta" class="control-label"></label>

@@ -13,6 +13,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Sicil No</th>
             <th>Ad</th>
             <th>Soyad</th>
             <th>Departman</th>
@@ -25,11 +26,13 @@
         @foreach (var personel in Model)
         {
             <tr>
+                <td>@personel.SicilNo</td>
                 <td>@personel.Ad</td>
                 <td>@personel.Soyad</td>
                 <td>@personel.Departman</td>
                 <td>@personel.Pozisyon</td>
                 <td>
+                    <a asp-action="Details" asp-route-id="@personel.Id" class="btn btn-info btn-sm">Detay</a> |
                     <a asp-action="Edit" asp-route-id="@personel.Id" class="btn btn-warning btn-sm">Düzenle</a> |
                     <a asp-action="Delete" asp-route-id="@personel.Id" class="btn btn-danger btn-sm">Sil</a>
                 </td>

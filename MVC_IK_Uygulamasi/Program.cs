@@ -15,6 +15,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // PersonelServisi'ni kaydediyoruz. BU SATIR KALIYOR.
 builder.Services.AddScoped<PersonelServisi>();
+// IzinServisi'ni kaydediyoruz.
+builder.Services.AddScoped<IzinServisi>(); // BU SATIRI EKLE
+
 // --- EKLENTÝLERÝN SONU ---
 
 // Identity sistemini, bizim düzenlediðimiz UygulamaDbContext'i kullanacak þekilde ayarlýyoruz.

@@ -1,0 +1,46 @@
+﻿@model MVC_IK_Uygulamasi.Models.Personel
+
+@{
+    ViewData["Title"] = "Personel Detayları";
+}
+
+<h1>Personel Detayları</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.SicilNo)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.SicilNo)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Ad)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Ad)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Soyad)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Soyad)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TCKimlikNo)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TCKimlikNo)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Departman)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Departman)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Pozisyon)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Pozisyon)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Maas)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Maas)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Eposta)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Eposta)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TelefonNumarasi)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TelefonNumarasi)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.IseGirisTarihi)</dt>
+        <dd class="col-sm-9">@Model.IseGirisTarihi.ToShortDateString()</dd>
+    </dl>
+</div>
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+    <a asp-action="Index" class="btn btn-secondary">Listeye Geri Dön</a>
+</div>
