@@ -38,6 +38,13 @@ namespace MVC_IK_Uygulamasi.Services
                 await _dbContext.SaveChangesAsync();
             }
         }
+        // Bu metodu sınıfın içine, diğer metotların yanına ekle
+        public async Task PersonelGuncelleAsync(Personel guncellenecekPersonel)
+        {
+            // EF Core, nesneyi zaten takip ettiği için sadece durumunu "Değiştirildi" olarak işaretliyoruz.
+            _dbContext.Update(guncellenecekPersonel);
+            await _dbContext.SaveChangesAsync(); // Değişiklikleri veritabanına kaydet.
+        }
 
     }
 }

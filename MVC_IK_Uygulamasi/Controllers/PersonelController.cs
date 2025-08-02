@@ -74,5 +74,42 @@ namespace MVC_IK_Uygulamasi.Controllers
             return RedirectToAction(nameof(Index)); // Silme işleminden sonra listeleme sayfasına yönlendir.
         }
 
+        // Bu iki metodu Controller'ın içine, diğer metotların yanına ekle
+
+        // GET: /Personel/Edit/5
+        // Düzenlenecek personelin bilgilerini bulup formda gösterir.
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var personel = await _personelServisi.PersonelBulAsync(id.Value);
+            if (personel == null)
+            {
+                return NotFound();
+            }
+            return View(personel); // Personel bilgilerini düzenleme formuna gönder.
+        }
+
+        // POST: /Personel/Edit/5
+        // Formdan gelen güncel bilgileri alıp veritabanına kaydeder.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Personel personel)
+        {
+            if (id != personel.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _personelServisi.PersonelGuncelleAsync(personel);
+                return RedirectToAction(nameof(Index)); // İşlemden sonra listeye yönlendir.
+            }
+            return View(personel); // Hata varsa formu geri göster.
+        }
     }
 }
