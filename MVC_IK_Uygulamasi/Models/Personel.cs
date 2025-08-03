@@ -36,5 +36,9 @@ namespace MVC_IK_Uygulamasi.Models
         // arayüzde belirtmek için kullanılacak bir bayraktır.
         [NotMapped]
         public bool BugunIzinliMi { get; set; } = false;
+
+        // YENİ İLİŞKİ ÖZELLİĞİ:
+        // Bir personelin birden çok izni olabileceğini belirtir.
+        public virtual ICollection<Izin> Izinler { get; set; }
     }
 }

@@ -25,7 +25,8 @@
     <tbody>
         @foreach (var personel in Model)
         {
-            <tr>
+            string satirRengi = personel.BugunIzinliMi ? "table-warning" : "";
+            <tr class="@satirRengi">
                 <td>@personel.SicilNo</td>
                 <td>@personel.Ad</td>
                 <td>@personel.Soyad</td>

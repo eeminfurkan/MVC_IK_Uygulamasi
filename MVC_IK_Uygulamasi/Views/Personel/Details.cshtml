@@ -39,8 +39,41 @@
         <dt class="col-sm-3">@Html.DisplayNameFor(model => model.IseGirisTarihi)</dt>
         <dd class="col-sm-9">@Model.IseGirisTarihi.ToShortDateString()</dd>
     </dl>
+    @* ... personelin temel bilgilerini gösteren <dl> listesinin bittiği yer ... *@
 </div>
 <div class="mt-4">
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
     <a asp-action="Index" class="btn btn-secondary">Listeye Geri Dön</a>
 </div>
+
+<hr class="my-4" />
+<h3>İzin Geçmişi</h3>
+
+@if (Model.Izinler != null && Model.Izinler.Any())
+{
+    <table class="table table-sm table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>İzin Türü</th>
+                <th>Başlangıç</th>
+                <th>Bitiş</th>
+                <th>Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var izin in Model.Izinler)
+            {
+                <tr>
+                    <td>@izin.IzinTuru</td>
+                    <td>@izin.BaslangicTarihi.ToShortDateString()</td>
+                    <td>@izin.BitisTarihi.ToShortDateString()</td>
+                    <td>@izin.OnayDurumu</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Bu personele ait bir izin kaydı bulunamadı.</p>
+}

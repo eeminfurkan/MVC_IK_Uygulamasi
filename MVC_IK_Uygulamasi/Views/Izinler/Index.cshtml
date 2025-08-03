@@ -44,8 +44,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.OnayDurumu)
                 </td>
-    @if (User.IsInRole("Admin"))
-    {
+        @if (User.IsInRole("Admin"))
+        {
                 <td>
                     <form asp-action="DurumGuncelle" method="post">
                         <div class="input-group">
@@ -59,7 +59,7 @@
                         </div>
                     </form>
                 </td>
-    }
+        }
 
             </tr>
         }

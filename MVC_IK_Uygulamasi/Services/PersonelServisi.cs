@@ -13,8 +13,28 @@ namespace MVC_IK_Uygulamasi.Services
         }
         public async Task<List<Personel>> TumPersonelleriGetirAsync()
         {
-            return await _dbContext.Personeller.ToListAsync();
+            var bugun = DateTime.Today;
+
+            var bugununIzinleri = await _dbContext.Izinler
+                .Where(i => i.OnayDurumu == "Onaylandı" &&
+                            i.BaslangicTarihi <= bugun &&
+                            i.BitisTarihi >= bugun)
+                .Select(i => i.PersonelId)
+                .ToListAsync();
+
+            var tumPersoneller = await _dbContext.Personeller.ToListAsync();
+
+            foreach (var personel in tumPersoneller)
+            {
+                if (bugununIzinleri.Contains(personel.Id))
+                {
+                    personel.BugunIzinliMi = true;
+                }
+            }
+
+            return tumPersoneller;
         }
+        // ... PersonelBulAsync, PersonelEkleAsync, GuncelleAsync, SilAsync gibi diğer metotların da bu dosyada olduğundan emin ol.
         public async Task PersonelEkleAsync(Personel yeniPersonel)
         {
             _dbContext.Personeller.Add(yeniPersonel);
@@ -25,8 +45,10 @@ namespace MVC_IK_Uygulamasi.Services
 
         public async Task<Personel> PersonelBulAsync(int id)
         {
-            // FindAsync, verilen Id'ye sahip personeli bulur. Bulamazsa null döner.
-            return await _dbContext.Personeller.FindAsync(id);
+            // Personeli bulurken, ona bağlı olan İzinler listesini de getirmesini söylüyoruz.
+            return await _dbContext.Personeller
+                                   .Include(p => p.Izinler)
+                                   .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task PersonelSilAsync(int id)
