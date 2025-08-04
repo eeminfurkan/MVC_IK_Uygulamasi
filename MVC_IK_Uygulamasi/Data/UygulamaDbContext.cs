@@ -14,7 +14,8 @@ namespace MVC_IK_Uygulamasi.Data
 
         // Kendi tablomuzu da buraya ekliyoruz.
         public DbSet<Personel> Personeller { get; set; }
-        public DbSet<Izin> Izinler { get; set; } // BU SATIRI EKLE
+        public DbSet<Izin> Izinler { get; set; }
+        public DbSet<Bordro> Bordrolar { get; set; } // BU SATIRI EKLE
 
     }
 }

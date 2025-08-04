@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MVC_IK_Uygulamasi.Models.Bordro>
+
+@{
+    ViewData["Title"] = "Oluşturulan Bordrolar";
+}
+
+<h1>Oluşturulan Bordrolar</h1>
+
+<div class="mb-3">
+    <a asp-action="Olustur" class="btn btn-primary">Yeni Aylık Bordro Oluştur</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Dönem</th>
+            <th>Personel</th>
+            <th>Brüt Maaş</th>
+            <th>Ek Ödemeler</th>
+            <th>Toplam Kesintiler</th>
+            <th>Net Maaş</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Donem)</td>
+                <td>@Html.DisplayFor(modelItem => item.Personel.Ad) @Html.DisplayFor(modelItem => item.Personel.Soyad)</td>
+                <td>@item.BrutMaas.ToString("N2") ₺</td>
+                <td>@item.EkOdemeler.ToString("N2") ₺</td>
+                <td>@item.ToplamKesintiler.ToString("N2") ₺</td>
+                <td><strong>@item.NetMaas.ToString("N2") ₺</strong></td>
+            </tr>
+        }
+    </tbody>
+</table>

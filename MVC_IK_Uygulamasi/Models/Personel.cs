@@ -18,8 +18,9 @@ namespace MVC_IK_Uygulamasi.Models
         public string Departman { get; set; }
         public string Pozisyon { get; set; }
 
-        [Display(Name = "Maaş")]
-        public decimal Maas { get; set; }
+        // YENİSİ:
+        [Display(Name = "Brüt Maaş")]
+        public decimal BrutMaas { get; set; }
 
         [Display(Name = "İşe Giriş Tarihi")]
         [DataType(DataType.Date)]
@@ -38,7 +39,7 @@ namespace MVC_IK_Uygulamasi.Models
         public bool BugunIzinliMi { get; set; } = false;
 
         // YENİ İLİŞKİ ÖZELLİĞİ:
-        // Bir personelin birden çok izni olabileceğini belirtir.
-        public virtual ICollection<Izin> Izinler { get; set; }
+    // Bir personelin birden çok izni olabileceğini belirtir.
+    public virtual ICollection<Izin> Izinler { get; set; }
     }
 }

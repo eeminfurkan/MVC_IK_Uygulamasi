@@ -19,6 +19,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<PersonelServisi>();
 // IzinServisi'ni kaydediyoruz.
 builder.Services.AddScoped<IzinServisi>(); // BU SATIRI EKLE
+// ...
+builder.Services.AddScoped<BordroServisi>(); // BU SATIRI EKLE
+
 
 // --- EKLENTÝLERÝN SONU ---
 

@@ -3,6 +3,24 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1 class="display-4">İnsan Kaynakları Modülüne Hoş Geldiniz</h1>
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Hoş Geldiniz, @User.Identity.Name!</h4>
+            <p>Sisteme başarıyla giriş yaptınız. İnsan kaynakları modülünü kullanmaya başlayabilirsiniz.</p>
+        </div>
+    }
+    else
+    {
+        <h1 class="display-4">İnsan Kaynakları Modülü</h1>
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Giriş Yapınız</h4>
+            <p>Bu modülü kullanabilmek için lütfen giriş yapınız.</p>
+            <hr>
+            <p class="mb-0">
+                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Giriş Yap</a>
+            </p>
+        </div>
+    }
 </div>
