@@ -22,7 +22,6 @@ namespace MVC_IK_Uygulamasi.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Bu metodu daha önce yazmıştık, şimdi çalışacak.
             var izinler = new List<Izin>();
             if (User.IsInRole("Admin"))
             {
@@ -38,6 +37,12 @@ namespace MVC_IK_Uygulamasi.Controllers
 
         public async Task<IActionResult> Create()
         {
+            // Adminler için izin talep sayfasına erişimi engelle
+            if (User.IsInRole("Admin"))
+            {
+                return Forbid(); // Adminler bu sayfaya erişemez.
+            }
+
             // Normal bir personel, sadece kendisi için izin talep edebilmeli.
             // Admin ise herkes için talep oluşturabilmeli. Şimdilik basit tutalım.
             ViewBag.Personeller = new SelectList(await _personelServisi.TumPersonelleriGetirAsync(), "Id", "Ad");
@@ -48,6 +53,12 @@ namespace MVC_IK_Uygulamasi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Izin yeniIzinTalebi)
         {
+            // Adminler için izin talep işlemini engelle
+            if (User.IsInRole("Admin"))
+            {
+                return Forbid(); // Adminler bu işlemi yapamaz.
+            }
+
             yeniIzinTalebi.TalepTarihi = DateTime.Now;
             yeniIzinTalebi.OnayDurumu = "Beklemede";
             await _izinServisi.IzinTalebiEkleAsync(yeniIzinTalebi);

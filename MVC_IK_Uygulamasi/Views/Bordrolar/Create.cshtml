@@ -7,12 +7,12 @@
 <h1>Aylık Bordro Oluştur</h1>
 <hr />
 
-<form asp-action="Olustur" method="post">
+<form asp-action="Create" method="post">
 
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="donem" class="form-label">Bordro Dönemi (Ay/Yıl)</label>
-            <input type="text" name="bordrolar[0].Donem" class="form-control" placeholder="Örn: Ağustos 2025" />
+            <input type="month" id="donem" name="donem" class="form-control" required />
         </div>
     </div>
 
