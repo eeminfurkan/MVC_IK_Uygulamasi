@@ -3,11 +3,11 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hoş Geldiniz, @User.Identity?.Name</a>
-    </li>
+        </li>
 
         @if (User.IsInRole("Admin"))
         {
@@ -16,16 +16,18 @@
             </li>
         }
 
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Çıkış Yap</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Giriş Yap</a>
-    </li>
-}
+        <li class="nav-item">
+            @* Çıkış formunu gizli tutuyoruz ve sadece javascript ile tetikleyeceğiz *@
+            <form id="logout_form" method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"></form>
+
+            @* Bu link, tıklandığında yukarıdaki gizli formu gönderir *@
+            <a class="nav-link btn btn-link text-dark" href="#" onclick="event.preventDefault(); document.getElementById('logout_form').submit();">Çıkış Yap</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Giriş Yap</a>
+        </li>
+    }
 </ul>

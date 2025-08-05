@@ -35,34 +35,58 @@ namespace MVC_IK_Uygulamasi.Controllers
             return View(izinler);
         }
 
+        // GET: /Izinler/Create
         public async Task<IActionResult> Create()
         {
-            // Adminler için izin talep sayfasına erişimi engelle
+            // Adminler bu sayfaya erişememeli, talep oluşturamamalı.
             if (User.IsInRole("Admin"))
             {
-                return Forbid(); // Adminler bu sayfaya erişemez.
+                return Forbid();
             }
 
-            // Normal bir personel, sadece kendisi için izin talep edebilmeli.
-            // Admin ise herkes için talep oluşturabilmeli. Şimdilik basit tutalım.
-            ViewBag.Personeller = new SelectList(await _personelServisi.TumPersonelleriGetirAsync(), "Id", "Ad");
-            return View();
+            // Artık tüm personelleri göndermeye gerek yok.
+            // Sadece view'ı döndürüyoruz.
+            return View(new Izin());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Izin yeniIzinTalebi)
         {
-            // Adminler için izin talep işlemini engelle
             if (User.IsInRole("Admin"))
             {
-                return Forbid(); // Adminler bu işlemi yapamaz.
+                return Forbid();
             }
 
+            // 1. Giriş yapmış kullanıcının ID'sini al.
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(); // Kullanıcı bulunamadıysa yetkisiz hatası ver.
+            }
+
+            // 2. Bu UserId ile ilişkili personeli veritabanından bul.
+            var personel = await _personelServisi.PersonelBulByUserIdAsync(userId); // Bu metodu servise ekleyeceğiz.
+            if (personel == null)
+            {
+                // Eğer kullanıcının bir personel kaydı yoksa hata göster.
+                ModelState.AddModelError(string.Empty, "Sistemde adınıza kayıtlı bir personel bulunamadı. Lütfen yöneticinizle iletişime geçin.");
+                return View(yeniIzinTalebi);
+            }
+
+            // 3. Formdan gelen PersonelId'yi yok sayıp, bulunan personelin Id'sini ata.
+            yeniIzinTalebi.PersonelId = personel.Id;
             yeniIzinTalebi.TalepTarihi = DateTime.Now;
             yeniIzinTalebi.OnayDurumu = "Beklemede";
-            await _izinServisi.IzinTalebiEkleAsync(yeniIzinTalebi);
-            return RedirectToAction(nameof(Index));
+
+            // ModelState.Remove("Personel"); // "Personel" nesnesiyle ilgili doğrulama hatalarını yok say
+            if (ModelState.IsValid)
+            {
+                await _izinServisi.IzinTalebiEkleAsync(yeniIzinTalebi);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(yeniIzinTalebi);
         }
 
         [HttpPost]

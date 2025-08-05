@@ -23,12 +23,12 @@ builder.Services.AddScoped<IzinServisi>(); // BU SATIRI EKLE
 builder.Services.AddScoped<BordroServisi>(); // BU SATIRI EKLE
 
 
-// --- EKLENTÝLERÝN SONU ---
+// --- EKLENTï¿½LERï¿½N SONU ---
 
-// Identity sistemini, bizim düzenlediðimiz UygulamaDbContext'i kullanacak þekilde ayarlýyoruz.
-// YENÝ HALÝ:
-// YENÝSÝ:
-// YENÝ VE DOÐRU HALÝ:
+// Identity sistemini, bizim dï¿½zenlediï¿½imiz UygulamaDbContext'i kullanacak ï¿½ekilde ayarlï¿½yoruz.
+// YENï¿½ HALï¿½:
+// YENï¿½Sï¿½:
+// YENï¿½ VE DOï¿½RU HALï¿½:
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<UygulamaDbContext>();
@@ -65,13 +65,13 @@ app.MapRazorPages()
 
 // ... app.MapRazorPages(); ...
 
-// YENÝ EKLEDÝÐÝMÝZ BÖLÜM
-// Uygulama çalýþmaya baþlamadan önce rolleri ve admin'i tohumluyoruz.
+// YENï¿½ EKLEDï¿½ï¿½ï¿½Mï¿½Z Bï¿½Lï¿½M
+// Uygulama ï¿½alï¿½ï¿½maya baï¿½lamadan ï¿½nce rolleri ve admin'i tohumluyoruz.
 await AppSeeder.Seeder(app);
 
 
-// Uygulama her baþladýðýnda bekleyen Migration'larý otomatik olarak uygula.
-// Bu, "Update-Database" komutunu koddan çalýþtýrmak gibidir.
+// Uygulama her baï¿½ladï¿½ï¿½ï¿½nda bekleyen Migration'larï¿½ otomatik olarak uygula.
+// Bu, "Update-Database" komutunu koddan ï¿½alï¿½ï¿½tï¿½rmak gibidir.
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<UygulamaDbContext>();

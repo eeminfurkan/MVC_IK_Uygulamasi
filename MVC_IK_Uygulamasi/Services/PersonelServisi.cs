@@ -51,6 +51,12 @@ namespace MVC_IK_Uygulamasi.Services
                                    .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<Personel> PersonelBulByUserIdAsync(string userId)
+        {
+            return await _dbContext.Personeller
+                                   .FirstOrDefaultAsync(p => p.UserId == userId);
+        }
+
         public async Task PersonelSilAsync(int id)
         {
             var silinecekPersonel = await _dbContext.Personeller.FindAsync(id);
