@@ -74,5 +74,12 @@ namespace MVC_IK_Uygulamasi.Services
             await _dbContext.SaveChangesAsync(); // Değişiklikleri veritabanına kaydet.
         }
 
+        // --- YENİ EKLENECEK METOT ---
+        // Henüz bir kullanıcı (IdentityUser) ile ilişkilendirilmemiş personelleri getirir.
+        public async Task<List<Personel>> GetirAtanmamisPersonelleriAsync()
+        {
+            return await _dbContext.Personeller.Where(p => p.UserId == null).ToListAsync();
+        }
+
     }
 }

@@ -19,28 +19,26 @@ namespace MVC_IK_Uygulamasi.Services
         }
 
 
-        // YENİ METOT: Sadece belirli bir personele ait izinleri getirir.
         public async Task<List<Izin>> PersoneleAitIzinleriGetirAsync(string personelIdentityId)
         {
-            // Identity'den gelen kullanıcı ID'si ile bizim Personel modelimiz arasında bir bağlantı kurmamız gerekiyor.
-            // Şimdilik bu bağlantıyı en basit haliyle, e-posta üzerinden yapacağız.
-            // Daha gelişmiş sistemlerde, Personel modelinde Identity'nin UserId'sini tutan bir alan olur.
-            var kullanici = await _dbContext.Users.FindAsync(personelIdentityId);
+            // --- ESKİ KODU SİLİP YENİSİNİ EKLİYORUZ ---
 
-            if (kullanici != null)
+            // Doğrudan bize gelen kullanıcı ID'si (personelIdentityId) ile eşleşen personeli buluyoruz.
+            // Bu, en doğru ve en güvenilir yöntemdir.
+            var personel = await _dbContext.Personeller
+                                           .FirstOrDefaultAsync(p => p.UserId == personelIdentityId);
+
+            if (personel != null)
             {
-                // Kullanıcının e-postasına sahip personeli buluyoruz.
-                var personel = await _dbContext.Personeller.FirstOrDefaultAsync(p => p.Eposta == kullanici.Email);
-                if (personel != null)
-                {
-                    // O personele ait izinleri getiriyoruz.
-                    return await _dbContext.Izinler
-                        .Where(i => i.PersonelId == personel.Id)
-                        .Include(i => i.Personel)
-                        .ToListAsync();
-                }
+                // O personele ait izinleri getiriyoruz.
+                return await _dbContext.Izinler
+                    .Where(i => i.PersonelId == personel.Id)
+                    .Include(i => i.Personel) // Personel bilgilerini de dahil ediyoruz.
+                    .OrderByDescending(i => i.TalepTarihi) // İzinleri en yeniden eskiye doğru sıralayabiliriz.
+                    .ToListAsync();
             }
-            // Eğer eşleşen personel bulunamazsa boş liste döndür.
+
+            // Eğer eşleşen personel bulunamazsa (normalde olmamalı), boş liste döndür.
             return new List<Izin>();
         }
 

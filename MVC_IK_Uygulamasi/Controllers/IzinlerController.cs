@@ -79,6 +79,9 @@ namespace MVC_IK_Uygulamasi.Controllers
             yeniIzinTalebi.TalepTarihi = DateTime.Now;
             yeniIzinTalebi.OnayDurumu = "Beklemede";
 
+            ModelState.Remove("Personel");
+            ModelState.Remove("OnayDurumu");
+
             // ModelState.Remove("Personel"); // "Personel" nesnesiyle ilgili doğrulama hatalarını yok say
             if (ModelState.IsValid)
             {
